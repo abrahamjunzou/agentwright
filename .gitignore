@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Runtime data artifacts (never commit agent state or secrets)
+*.db
+*.lmdb/
+vault.bin
+master.key
+.pytest_cache/
+
+# Secrets — API keys, never commit
+.env
+.env.*
+
+# Coverage artifacts
+.coverage
+htmlcov/

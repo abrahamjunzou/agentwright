@@ -1,0 +1,84 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentwright"
+version = "0.1.0"
+description = "agentwright: typed, composable primitives for building, validating, and running AI agents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Abraham Zou", email = "abrahamjzoutech@gmail.com" }]
+maintainers = [{ name = "Abraham Zou", email = "abrahamjzoutech@gmail.com" }]
+keywords = ["ai", "agents", "agent-framework", "llm", "orchestration", "primitives"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Typing :: Typed",
+]
+dependencies = [
+    "croniter>=6.2.2",
+    "cryptography>=48.0.0",
+    "lmdb>=2.2.0",
+    "opentelemetry-api>=1.42.1",
+    "opentelemetry-sdk>=1.42.1",
+    "pydantic>=2.13.4",
+    "tinydb>=4.8.2",
+]
+
+[project.optional-dependencies]
+# Real backend adapters (agentwright/runtime/real_backends.py). Install the
+# extra you need; the runtime falls back to in-memory implementations otherwise.
+# Note: LadybugDB (graph) has no PyPI wheel yet, so it is not declared here — the
+# LadybugGraphStore adapter exists but requires a manual `ladybugdb` install.
+surreal = [
+    "surrealdb>=2.0.0",
+]
+chroma = [
+    "chromadb>=0.5",
+]
+anthropic = [
+    "anthropic>=0.40",
+]
+openai = [
+    "openai>=1.40",
+]
+google = [
+    "google-generativeai>=0.8",
+]
+mem0 = [
+    "mem0ai>=0.1",
+]
+browser = [
+    "playwright>=1.40",
+]
+# Every real backend at once (LadybugDB excluded — no PyPI wheel yet).
+all = [
+    "agentwright[surreal,chroma,anthropic,openai,google,mem0,browser]",
+]
+
+[project.urls]
+Homepage = "https://github.com/abrahamjunzou/agentwright"
+Repository = "https://github.com/abrahamjunzou/agentwright"
+Issues = "https://github.com/abrahamjunzou/agentwright/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.hatch.build.targets.wheel]
+# Ship the importable package (includes the py.typed marker); exclude tests/docs.
+packages = ["agentwright"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
